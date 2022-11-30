@@ -1,5 +1,6 @@
 from tkinter import *
 import check
+import scoreboard as sb
 
 next_player = "X"
 
@@ -39,10 +40,25 @@ def win_window(state):
     root.destroy()
     root2 = Tk()
     root2.title("Győzelem")
-    root2.geometry('300x200')
+    root2.geometry('400x200')
     root2.eval('tk::PlaceWindow . center')
-    root2_label = Label(text=state, font=("Arial", 16))
+    root2_label = Label(text=state, font=("Arial", 16), fg="Red")
+
+    if state == "X nyert":
+        sb.set_win("X")
+    elif state == "O nyert":
+        sb.set_win("O")
+    elif state == "Döntetlen":
+        sb.set_win("Döntetlen")
+    else:
+        print("Hibás state a winnél.")
+
+    wins = sb.get_wins()
+    string2 = "Eddig X nyert {x_win} alkalommal. \nEddig O nyert {o_win} alkalommal.\
+     \nDöntetlen lett {draw} alkalommal.".format(x_win=wins[0], o_win=wins[1], draw=wins[2])
+    root2_label2 = Label(text=string2, font=("Arial", 16))
     root2_label.pack()
+    root2_label2.pack()
     root2.mainloop()
 
 
